@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Q&A Bot</title>
+</head>
+<body>
+  <h2>Ask about products</h2>
+  <input type="text" id="question" placeholder="Ask a question..." />
+  <button type="button" onclick="ask()">Ask</button>
+  <p id="answer"></p>
+
+  <script>
+    async function ask() {
+      const question = document.getElementById("question").value;
+      const res = await fetch("http://127.0.0.1:8000/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
+      const data = await res.json();
+      document.getElementById("answer").textContent = data.response || data.error;
+    }
+  </script>
+</body>
+</html>
